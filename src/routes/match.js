@@ -25,10 +25,10 @@ router.get("/test", async (req,res) => {
 });
 
 
-//@route GET hid:aid
+//@route GET match/:hid/:aid
 //@desc Get match history between two teams
 //@access private
-router.get("/:hid/:aid", async (req,res) => {
+router.get("/match/:hid/:aid", async (req,res) => {
   try {
     const { hid, aid } = req.params
     const history = await mw.getMatchHistory(hid, aid)
@@ -46,6 +46,48 @@ router.get("/:hid/:aid", async (req,res) => {
     });
   }
 });
+
+//@route GET flag/:tid
+//@desc Get flag url of a certain team
+//@access private
+router.get("/flag/:tid", async (req,res) => {
+  try {
+    const { tid } = req.params
+    const flag = await mw.getTeamFlag(tid)
+
+    return res.status(200).json({
+        message: "Flag Found",
+        payload: flag,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
+// We can also feed the name straight into the url rather than doing ids
+// router.get("/flag/country", async (req,res) => {
+//   try {
+//     const { country } = req.params
+//     const flag = await mw.getTeamFlag(country)
+
+//     return res.status(200).json({
+//         message: "Flag Found",
+//         payload: flag,
+//     });
+
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({
+//       message: "Internal Server Error",
+//       payload: error,
+//     });
+//   }
+// });
+
 
 //Export router
 module.exports = router;

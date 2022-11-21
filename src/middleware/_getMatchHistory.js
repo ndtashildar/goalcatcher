@@ -10,7 +10,7 @@ module.exports = async (home_id, away_id) => {
       WHERE h.tid = $1 AND a.tid = $2`,
       [home_id, away_id]
     );
-    return queryResult.rows.length > 0 ? queryResult.rows[0] : null;
+    return queryResult.rows.length > 0 ? queryResult.rows : null;
   } catch (error) {
     throw error;
   }
