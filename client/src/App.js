@@ -1,27 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useEffect, useState } from "react";
-import Dropdown from './Components/Dropdown';
+import React, { Suspense } from "react";
+import "./app/styles/index.scss";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
+import Navbar from "./app/containers/Navbar";
+import Footer from "./app/components/Footer";
+import Loading from "./app/components/Loading";
+
+const Landing = React.lazy(() => import("./app/routes/Landing"));
+
+const App = (props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-      <div>
-        <img src={logo} id="test"/>
-        <h id="title"> Goal Catcher</h>
-      </div> 
-      <div id="instructions">
-        <p>Choose countries to view their match histories!</p>
-      </div>
-      <div className='rowC'><Dropdown /><p id="vs">VS.</p><Dropdown /></div>
-      <button className='content-button'>Search!</button>
-
-
-        
-      </header>
-    </div>
+    <React.Fragment>
+      <Router>
+        <Navbar />
+          <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route exact path="/" {...props} element={<Landing/>} />
+              </Routes>
+          </Suspense>
+        <Footer />
+      </Router>
+    </React.Fragment>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,20 @@
+@import "./_variables.scss";
+
+@import "./_modifiers.scss";
+@import "./_elements.scss";
+@import "./_containers.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap");
+
+/***** Global Style Defaults *****/
+html {
+  color: map-get($color, "light");
+  background: map-get($color, "scarlet");
+  scroll-behavior: smooth;
+}
+
+body, div, section, nav, footer, form, table, article, img, iframe, input, textarea, optgroup, select, button, ul, ol, li, a, h1, h2, h3, h4, h5, h6, p  {
+  font-family:map-get($typography, "primary");
+  margin: 0;
+  text-rendering: optimizeLegibility;
+}

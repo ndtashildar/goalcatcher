@@ -1,0 +1,35 @@
+@import "../../styles/_variables.scss";
+
+.dropdown {
+    width: 150px;
+    margin: 100px auto;
+}
+
+.dropdown .dropdown-btn {
+    padding: 15px, 20px;
+    background: map-get($color, "light");
+    box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+    font-weight: bold;
+    color: map-get($color, "scarlet");
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown .dropdown-content {
+    top: 100%;
+    padding: 15px;
+    background: map-get($color, "light");
+    box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+    font-weight: 500;
+    color: map-get($color, "scarlet");
+    width: 95%;
+}
+
+.dropdown .dropdown-content .dropdown-item {
+    padding: 10px;
+}
+
+.dropdown .dropdown-content .dropdown-item:hover {
+    background: map-get($color, "light-blue");
+}
