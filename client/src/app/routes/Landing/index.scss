@@ -32,12 +32,12 @@
         }
         .dropdowns {
             justify-content: center;
-            :not(:last-child) {
-                margin-right: map-get($size, "sm");
-            }
-            .dropdown {
-                min-width: 1.2 * map-get($spacing, "xl");
-            }
+            align-items: center;
+            display: flex;
+            padding: {
+              top: map-get($spacing, "xs");
+              bottom: map-get($spacing, "xs");
+            };
         }
     }
 }

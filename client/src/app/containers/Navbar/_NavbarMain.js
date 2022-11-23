@@ -11,7 +11,7 @@ const NavbarMain = () => {
   return (
     <nav className="Navbar">
       <div className="inner container is-fixed">
-        <NavLink exact activeClassName="active" className="no-deco" to="/">
+        <NavLink className="no-deco" to="/">
           Home
         </NavLink>
       </div>

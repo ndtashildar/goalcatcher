@@ -1,27 +1,39 @@
 import React from 'react'
 import Select from 'react-select'
-import "./index.scss";
 
 const teams = [
-  { value: 1, label: 'England' },
-  { value: 2, label: 'Brazil' },
-  { value: 3, label: 'Argentina' }
+  { value: 87, label: 'England' },
+  { value: 40, label: 'Brazil' },
+  { value: 14, label: 'Argentina' }
 ]
 
-function dropTheme(theme){
-  return{
-    ...theme,   
-  }
-}
+const colorStyles = {
+  container: styles => ({ ...styles, backgroundColor: '#edeee4', width: 300, margin: 10}),
+  control: styles => ({ ...styles, backgroundColor: '#edeee4', width: 300}),
+  dropdownIndicator: styles => ({ ...styles, backgroundColor: '#edeee4', color: '#FEC310'}),
+  input: styles => ({ ...styles, color: '#56042C'}),
+  option: (styles, {isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+      backgroundColor: isFocused ? '#FEC310' : '#edeee4',
+      color: '#56042C',
+      cursor: isDisabled ? 'not-allowed' : 'default',
+      width: 300
+    };
+  },
+};
 
-const Dropdown = () => {
+
+const Dropdown = ({onChange}) => {
   return (
-    <Select
-    theme={dropTheme}
-    options={teams}
-    className="dropdown"
-    placeholder="Select Team"
-    isSearchable/>
+    <div className="dropdown">
+      <Select
+      options={teams}
+      styles={colorStyles}
+      onChange={onChange}
+      placeholder="Select Team"
+      isSearchable/>
+    </div>
   )
 }
 
