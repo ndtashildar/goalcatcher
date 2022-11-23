@@ -1,30 +1,28 @@
-import { useState } from "react";
+import React from 'react'
+import Select from 'react-select'
 import "./index.scss";
 
-const Dropdown = ({selected, setSelected}) => {
-    const [isActive, setActive] = useState(false);
-    const teams = ["England", "Brazil", "Portugal"];
-    return (
-        <div className="dropdown">
-            <div className="dropdown-btn" onClick={(e) => setActive(!isActive)}>
-            {selected}
-            <span className="fas fa-caret-down"></span>
-            </div>
-            {isActive && (
-                <div className="dropdown-content">
-                    {teams.map((team) => (
-                        <div onClick={(e) => {
-                            setSelected(team)
-                            setActive(false);
-                        }}
-                        className="dropdown-item">
-                            {team}
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
+const teams = [
+  { value: 1, label: 'England' },
+  { value: 2, label: 'Brazil' },
+  { value: 3, label: 'Argentina' }
+]
+
+function dropTheme(theme){
+  return{
+    ...theme,   
+  }
+}
+
+const Dropdown = () => {
+  return (
+    <Select
+    theme={dropTheme}
+    options={teams}
+    className="dropdown"
+    placeholder="Select Team"
+    isSearchable/>
+  )
 }
 
 export default Dropdown;

@@ -15,17 +15,15 @@ const Landing = () => {
         <p className="is-lg subtitle has-text-centered">
           Select Two Teams To Get Started
         </p>
-        <div>
-          <Dropdown selected={"T"}/>
+        <div className="dropdowns">
+          <Dropdown className= "dropdown"/>
+          <Dropdown className= "dropdown"/>
         </div>
         <div className="buttons">
             <Link to="/another">
               <button className="button is-blue is-hollow is-large">
-                Another Page
+                Search
               </button>
-            </Link>
-            <Link to="/dashboard">
-              <button className="button is-blue is-large">Dashboard</button>
             </Link>
         </div>
       </div>
