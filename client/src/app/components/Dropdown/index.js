@@ -2,6 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 
 const teams = [
+  { value: 0, label: ''},
   { value: 87, label: 'England' },
   { value: 40, label: 'Brazil' },
   { value: 14, label: 'Argentina' }

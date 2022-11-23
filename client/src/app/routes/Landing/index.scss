@@ -39,5 +39,14 @@
               bottom: map-get($spacing, "xs");
             };
         }
+        .errorMessage {
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            padding: {
+              top: map-get($spacing, "xs");
+              bottom: map-get($spacing, "xs");
+            };
+        }
     }
 }

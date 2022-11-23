@@ -47,6 +47,28 @@ router.get("/match/:hid/:aid", async (req,res) => {
   }
 });
 
+//@route GET match/:hid
+//@desc Get match history between two teams
+//@access private
+router.get("/match/:hid", async (req,res) => {
+  try {
+    const { hid } = req.params
+    const history = await mw.getIndividualHistory(hid)
+
+    return res.status(200).json({
+        message: "Matches Found",
+        payload: history,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
+
 //@route GET flag/:tid
 //@desc Get flag url of a certain team
 //@access private
