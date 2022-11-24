@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from "react";
-import { Link } from "react-router-dom";
 import "./index.scss";
 
 //Import components
 import Dropdown from "../../components/Dropdown";
+import MatchTable from "../../components/MatchTable";
 
 //Import containers
 
@@ -64,7 +64,6 @@ const Landing = () => {
         const response = await fetch(`/match/${hid}/${aid}`)
         const matches = response.json()
         matches.then(value => {
-          // console.log(value.payload)
           setData(value.payload)
           console.log(data)
           console.log(data[0])
@@ -82,8 +81,14 @@ const Landing = () => {
     <div className="Landing">
       <div className="inner container is-fluid">
         <h1 className="title is-xxxxl has-text-centered">Goal Catcher</h1>
-        <p className="is-lg subtitle has-text-centered">
-          Select Two Teams To Get Started
+        <p className="is-rem subtitle has-text-centered">
+          Select One Team For Individual Match History
+        </p>
+        <p className="is-rem is-bold subtitle has-text-centered">
+          OR
+        </p>
+        <p className="is-rem subtitle has-text-centered">
+          Select Two Teams For VS Match History
         </p>
         <div className="dropdowns">
           <Dropdown onChange={setHomeTeam}/>
@@ -92,37 +97,13 @@ const Landing = () => {
         </div>
         <p className="errorMessage">{searchErrorMessage}</p>
         <div className="buttons">
-            <Link to="/test">
               <button className="button is-grey is-hollow is-large" onClick={onSearch}>
                 Search
               </button>
-            </Link>
         </div>
         <div className="container">
-            <h1>Simple Inventory Table</h1>
-            <table>
-                <thead>
-                <tr>
-                    <th>mid</th>
-                    <th>home_score</th>
-                    <th>away_score</th>
-                    <th>team_name</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.map((item) => (
-                            <tr key={item.mid}>
-                                <td>{item.mid}</td>
-                                <td>{item.home_score}</td>
-                                <td>{item.away_score}</td>
-                                <td>{item.team_name}</td>
-                                <td/>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+            <h1>Match History</h1>
+            <MatchTable data={data}/>
         </div>
       </div>
     </div>

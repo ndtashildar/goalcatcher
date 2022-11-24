@@ -47,13 +47,13 @@ router.get("/match/:hid/:aid", async (req,res) => {
   }
 });
 
-//@route GET match/:hid
+//@route GET match/:tid
 //@desc Get match history between two teams
 //@access private
-router.get("/match/:hid", async (req,res) => {
+router.get("/match/:tid", async (req,res) => {
   try {
-    const { hid } = req.params
-    const history = await mw.getIndividualHistory(hid)
+    const { tid } = req.params
+    const history = await mw.getIndividualHistory(tid)
 
     return res.status(200).json({
         message: "Matches Found",
