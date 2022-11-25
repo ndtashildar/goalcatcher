@@ -21,27 +21,9 @@
             };
             max-width: 420px;
         }
-        .buttons {
-            justify-content: center;
-            :not(:last-child) {
-                margin-right: map-get($size, "sm");
-            }
-            .button {
-                min-width: 1.2 * map-get($spacing, "xl");
-            }
-        }
         .dropdowns {
             justify-content: center;
             align-items: center;
-            display: flex;
-            padding: {
-              top: map-get($spacing, "xs");
-              bottom: map-get($spacing, "xs");
-            };
-        }
-        .errorMessage {
-            align-items: center;
-            justify-content: center;
             display: flex;
             padding: {
               top: map-get($spacing, "xs");

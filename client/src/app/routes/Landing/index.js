@@ -10,73 +10,88 @@ import MatchTable from "../../components/MatchTable";
 const Landing = () => {
   const [homeTeam, setHomeTeam] = useState({});
   const [awayTeam, setAwayTeam] = useState({});
-
-  const [searchErrorMessage, setSearchErrorMessage] = useState("");
+  const [selectAway, setSelectedAway] = useState(true);
+  const [clearable, setClearable] = useState(true);
 
   // state for data from db
   const [data, setData] = useState([]);
+  const [teams, setTeams] = useState([]);
 
- 
+  useEffect(() => {
+    fetch("/teams")
+    .then(response => response.json())
+    .then(data => setTeams(data.payload))
+  }, []);
 
-  const onSearch = async e => {
-    e.preventDefault();
+  const homeDropdownChange = async e => {
+    setHomeTeam(e); 
+    if (e !== null){
+      setSelectedAway(false);
+      try {
+        const hid = e.value;
+        const aid = awayTeam.value;
+  
+        if(!aid){
+          const response = await fetch(`/match/${hid}`)
+          const matches = response.json()
+          matches.then(value => {
+            setData(value.payload)
+          }).catch (err => {
+            console.log(err)
+          })
+        }
+        else{
+          const response = await fetch(`/match/${hid}/${aid}`)
+          const matches = response.json()
+          matches.then(value => {
+            setData(value.payload)
+          }).catch (err => {
+            console.log(err)
+          })
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    else{
+      setSelectedAway(true);
+      setData(null)
+    }
+    
+  }
+
+  const awayDropdownChange = async e => {
+    setAwayTeam(e);
     try {
       const hid = homeTeam.value;
-      const aid = awayTeam.value;
-      setSearchErrorMessage("");
-
-      if(!hid && !aid){
-        setSearchErrorMessage("Please Select A Team!");
-        return
-      }
-      else if(!hid || hid === 0){
-        const response = await fetch(`/match/${aid}`)
-        
-        const matches = response.json()
-        
-        //matches is a promise, so use then
-
-        matches.then(value => {
-          // console.log(value.payload)
-          setData(value.payload)
-          console.log(data)
-          console.log(data[0])
-        }).catch (err => {
-          console.log(err)
-        })
-        
-        
-      }
-      else if(!aid || aid === 0){
-
+      
+      if(e == null){
+        setClearable(true);
         const response = await fetch(`/match/${hid}`)
         const matches = response.json()
         matches.then(value => {
-          // console.log(value.payload)
           setData(value.payload)
-          console.log(data)
-          console.log(data[0])
         }).catch (err => {
           console.log(err)
         })
       }
       else{
+        setClearable(false);
+        const aid = e.value;
         const response = await fetch(`/match/${hid}/${aid}`)
         const matches = response.json()
         matches.then(value => {
           setData(value.payload)
-          console.log(data)
-          console.log(data[0])
         }).catch (err => {
           console.log(err)
         })
       }
+
     } catch (error) {
       console.log(error);
     }
   }
 
- 
   return (
     <div className="Landing">
       <div className="inner container is-fluid">
@@ -91,15 +106,9 @@ const Landing = () => {
           Select Two Teams For VS Match History
         </p>
         <div className="dropdowns">
-          <Dropdown onChange={setHomeTeam}/>
+          <Dropdown options={teams} onChange={homeDropdownChange} isDisabled={false} isClearable={clearable}/>
           VS
-          <Dropdown onChange={setAwayTeam}/>
-        </div>
-        <p className="errorMessage">{searchErrorMessage}</p>
-        <div className="buttons">
-              <button className="button is-grey is-hollow is-large" onClick={onSearch}>
-                Search
-              </button>
+          <Dropdown options={teams} onChange={awayDropdownChange} isDisabled={selectAway} isClearable={true}/>
         </div>
         <div className="container">
             <h1>Match History</h1>

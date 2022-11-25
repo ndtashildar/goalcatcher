@@ -24,6 +24,26 @@ router.get("/test", async (req,res) => {
   }
 });
 
+//@route GET teams
+//@desc Fetch all teams to fill dropdowns on Landing page
+//@access private
+router.get("/teams", async (req,res) => {
+  try {
+    const teams = await mw.getTeams()
+
+    return res.status(200).json({
+        message: "Teams Fetched",
+        payload: teams,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
 
 //@route GET match/:hid/:aid
 //@desc Get match history between two teams

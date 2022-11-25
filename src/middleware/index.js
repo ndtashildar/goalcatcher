@@ -3,4 +3,5 @@ module.exports = {
     getMatchHistory: require("./_getMatchHistory"),
     getTeamFlag: require("./_getTeamFlag"),
     getIndividualHistory: require("./_getIndividualHistory"),
+    getTeams: require("./_getTeams"),
 };
