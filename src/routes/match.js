@@ -45,6 +45,48 @@ router.get("/teams", async (req,res) => {
   }
 });
 
+//@route GET loctions
+//@desc Fetch all locations to fill dropdowns on Landing page
+//@access private
+router.get("/locations", async (req,res) => {
+  try {
+    const locations = await mw.getLocations()
+
+    return res.status(200).json({
+        message: "Locations Fetched",
+        payload: locations,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
+
+//@route GET tournaments
+//@desc Fetch all tournaments to fill dropdowns on Landing page
+//@access private
+router.get("/tournaments", async (req,res) => {
+  try {
+    const tournaments = await mw.getTournaments()
+
+    return res.status(200).json({
+        message: "Tournaments Fetched",
+        payload: tournaments,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
+
 //@route GET match/:hid/:aid
 //@desc Get match history between two teams
 //@access private
