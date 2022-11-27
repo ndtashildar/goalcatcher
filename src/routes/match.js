@@ -45,16 +45,17 @@ router.get("/teams", async (req,res) => {
   }
 });
 
-//@route GET loctions
-//@desc Fetch all locations to fill dropdowns on Landing page
+//@route GET teams/away/:tid
+//@desc Fetch all teams to fill dropdowns on Landing page
 //@access private
-router.get("/locations", async (req,res) => {
+router.get("/teams/away/:tid", async (req,res) => {
   try {
-    const locations = await mw.getLocations()
+    const { tid } = req.params
+    const awayTeams = await mw.getAwayTeams(tid)
 
     return res.status(200).json({
-        message: "Locations Fetched",
-        payload: locations,
+        message: "Teams Fetched",
+        payload: awayTeams,
     });
 
   } catch (error) {
@@ -66,6 +67,49 @@ router.get("/locations", async (req,res) => {
   }
 });
 
+//@route GET teams/home/:tid
+//@desc Fetch all teams to fill dropdowns on Landing page
+//@access private
+router.get("/teams/home/:tid", async (req,res) => {
+  try {
+    const { tid } = req.params
+    const homeTeams = await mw.getHomeTeams(tid)
+
+    return res.status(200).json({
+        message: "Teams Fetched",
+        payload: homeTeams,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
+
+//@route GET loctions
+//@desc Fetch all locations to fill dropdowns on Landing page
+//@access private
+router.get("/locations", async (req,res) => {
+  try {
+    const locations = await mw.getLocations()
+
+    return res.status(200).json({
+        message: "Locations Fetched",
+        payload: locations,
+      });
+
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Internal Server Error",
+        payload: error,
+      });
+    }
+  });
+
 //@route GET tournaments
 //@desc Fetch all tournaments to fill dropdowns on Landing page
 //@access private
@@ -76,15 +120,15 @@ router.get("/tournaments", async (req,res) => {
     return res.status(200).json({
         message: "Tournaments Fetched",
         payload: tournaments,
-    });
+      });
 
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      message: "Internal Server Error",
-      payload: error,
-    });
-  }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Internal Server Error",
+        payload: error,
+      });
+    }
 });
 
 //@route GET match/:hid/:aid

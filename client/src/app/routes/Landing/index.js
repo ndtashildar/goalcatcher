@@ -15,12 +15,13 @@ const Landing = () => {
 
   // state for data from db
   const [data, setData] = useState([]);
-  const [teams, setTeams] = useState([]);
+  const [homeTeamsOptions, sethomeTeamsOptions] = useState([]);
+  const [awayTeamsOptions, setAwayTeamsOptions] = useState([]);
 
   useEffect(() => {
     fetch("/teams")
     .then(response => response.json())
-    .then(data => setTeams(data.payload))
+    .then(data => {setAwayTeamsOptions(data.payload); sethomeTeamsOptions(data.payload);})
   }, []);
 
   const homeDropdownChange = async e => {
@@ -29,9 +30,12 @@ const Landing = () => {
       setSelectedAway(false);
       try {
         const hid = e.value;
-        const aid = awayTeam.value;
-  
-        if(!aid){
+        await fetch(`/teams/away/${hid}`)
+        .then(response => response.json())
+        .then(data => setAwayTeamsOptions(data.payload))
+
+        if(awayTeam.value === undefined){
+          console.log("One", homeTeam, awayTeam)
           const response = await fetch(`/match/${hid}`)
           const matches = response.json()
           matches.then(value => {
@@ -41,6 +45,8 @@ const Landing = () => {
           })
         }
         else{
+          console.log("Two", homeTeam, awayTeam.value)
+          const aid = awayTeam.value;
           const response = await fetch(`/match/${hid}/${aid}`)
           const matches = response.json()
           matches.then(value => {
@@ -56,28 +62,21 @@ const Landing = () => {
     else{
       setSelectedAway(true);
       setData(null)
-    }
-    
+      await fetch("/teams")
+      .then(response => response.json())
+      .then(data => {setAwayTeamsOptions(data.payload)})
+    } 
   }
 
   const awayDropdownChange = async e => {
-    setAwayTeam(e);
-    try {
-      const hid = homeTeam.value;
-      
-      if(e == null){
-        setClearable(true);
-        const response = await fetch(`/match/${hid}`)
-        const matches = response.json()
-        matches.then(value => {
-          setData(value.payload)
-        }).catch (err => {
-          console.log(err)
-        })
-      }
-      else{
-        setClearable(false);
+    setAwayTeam(e); 
+    if (e !== null){
+      setClearable(false)
+      try {
+
         const aid = e.value;
+        const hid = homeTeam.value;
+
         const response = await fetch(`/match/${hid}/${aid}`)
         const matches = response.json()
         matches.then(value => {
@@ -85,11 +84,16 @@ const Landing = () => {
         }).catch (err => {
           console.log(err)
         })
-      }
 
-    } catch (error) {
-      console.log(error);
+      } catch (error) {
+        console.log(error);
+      }
     }
+    else{
+      setClearable(true)
+      setData(null)
+    }
+    
   }
 
   return (
@@ -106,9 +110,9 @@ const Landing = () => {
           Select Two Teams For VS Match History
         </p>
         <div className="dropdowns">
-          <Dropdown options={teams} onChange={homeDropdownChange} isDisabled={false} isClearable={clearable}/>
+          <Dropdown options={homeTeamsOptions} onChange={homeDropdownChange} isDisabled={false} isClearable={clearable}/>
           VS
-          <Dropdown options={teams} onChange={awayDropdownChange} isDisabled={selectAway} isClearable={true}/>
+          <Dropdown options={awayTeamsOptions} onChange={awayDropdownChange} isDisabled={selectAway} isClearable={true}/>
         </div>
         <div className="container">
             <h1>Match History</h1>

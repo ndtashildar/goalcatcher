@@ -1,9 +1,9 @@
 const {pool} = require("../db");
 
-module.exports = async (home_id, away_id) => {
+module.exports = async (team_id) => {
   try {
     const queryResult = await pool.query(
-      `SELECT matches.mid, home_score, away_score, m_date, h.team_name AS home_team, h.flag AS home_flag, a.team_name AS away_team, a.flag AS away_flag, t_name, region, neutral, city, country 
+      `SELECT DISTINCT h.tid AS value, h.team_name AS label 
       FROM matches
       INNER JOIN plays ON matches.mid = plays.mid 
       INNER JOIN teams AS h ON plays.home_id=h.tid 
@@ -12,8 +12,7 @@ module.exports = async (home_id, away_id) => {
       INNER JOIN tournaments ON participates.toid = tournaments.toid
       INNER JOIN locates ON matches.mid = locates.mid
       INNER JOIN locations ON locates.lid = locations.lid
-      WHERE (h.tid = $1 AND a.tid = $2) OR (a.tid = $1 AND h.tid = $2)`,
-      [home_id, away_id]
+      WHERE a.tid = $1`, [team_id]
     );
     return queryResult.rows.length > 0 ? queryResult.rows : null;
   } catch (error) {

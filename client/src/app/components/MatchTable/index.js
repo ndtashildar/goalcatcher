@@ -3,7 +3,7 @@ import "./index.scss";
 
 const MatchTable = (props) => {
     const data = props.data;
-    const dataTable = !data ? <></> : data.map((item) => (
+    const dataTable = !data ? <tr></tr> : data.map((item) => (
         <tr key={item.mid}>
             <td>{item.home_team}</td>
             <td>{item.away_team}</td>
