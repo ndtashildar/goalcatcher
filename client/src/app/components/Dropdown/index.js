@@ -18,14 +18,14 @@ const colorStyles = {
   },
 };
 
-const Dropdown = ({options, onChange, isDisabled, isClearable}) => {
+const Dropdown = ({options, onChange, placeholderText, isDisabled, isClearable}) => {
   return (
     <div className="dropdown">
       <Select
       options={options}
       styles={colorStyles}
       onChange={onChange}
-      placeholder="Select A Team"
+      placeholder={placeholderText}
       isDisabled={isDisabled}
       isClearable={isClearable}
       isSearchable/>

@@ -3,7 +3,7 @@ const {pool} = require("../db");
 module.exports = async (home_id, away_id) => {
   try {
     const queryResult = await pool.query(
-      `SELECT matches.mid, home_score, away_score, m_date, h.team_name AS home_team, h.flag AS home_flag, a.team_name AS away_team, a.flag AS away_flag, t_name, region, neutral, city, country 
+      `SELECT matches.mid, home_score, away_score, m_date, h.team_name AS home_team, h.flag AS home_flag, a.team_name AS away_team, a.flag AS away_flag, t_name, region, neutral, city, country, locations.lid, tournaments.toid 
       FROM matches
       INNER JOIN plays ON matches.mid = plays.mid 
       INNER JOIN teams AS h ON plays.home_id=h.tid 

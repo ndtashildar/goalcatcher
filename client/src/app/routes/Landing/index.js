@@ -4,7 +4,7 @@ import "./index.scss";
 //Import components
 import Dropdown from "../../components/Dropdown";
 import MatchTable from "../../components/MatchTable";
-
+import ToggleButton from "../../components/ToggleButton";
 //Import containers
 
 const Landing = () => {
@@ -96,6 +96,64 @@ const Landing = () => {
     
   }
 
+  // state for data from db
+  const [locations, setLocations] = useState({});
+  const [tournaments, setTournaments] = useState({});
+
+  // state for the output filtering
+  const [outputToid, setOutputToid] = useState({});
+  const [outputLid, setOutputLid] = useState({});
+
+
+  const locationChange = async e => {
+    // console.log('lid')
+    // console.log(e['value'])
+    
+    if (e !== null){
+      
+      try {
+        setOutputLid(e['value']); 
+        // console.log(outputLid)
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+  }
+        
+  const tournamentChange = async e => {
+    // console.log('lid')
+    // console.log(e['value'])
+    
+    if (e !== null){
+      
+      try {
+        setOutputToid(e['value']); 
+        // console.log(outputLid)
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    
+    fetch("/locations")
+    .then(response => response.json())
+    .then(data => setLocations(data.payload))
+
+    fetch("/tournaments")
+    .then(response => response.json())
+    .then(data => setTournaments(data.payload))
+    
+    // console.log(tournaments[0]['value'])
+    
+  }, []);
+
+  const [show,setShow]=useState(false)
+
   return (
     <div className="Landing">
       <div className="inner container is-fluid">
@@ -110,13 +168,20 @@ const Landing = () => {
           Select Two Teams For VS Match History
         </p>
         <div className="dropdowns">
-          <Dropdown options={homeTeamsOptions} onChange={homeDropdownChange} isDisabled={false} isClearable={clearable}/>
+          <Dropdown options={homeTeamsOptions} onChange={homeDropdownChange} placeholderText="Select A Team" isDisabled={false} isClearable={clearable}/>
           VS
-          <Dropdown options={awayTeamsOptions} onChange={awayDropdownChange} isDisabled={selectAway} isClearable={true}/>
+          <Dropdown options={awayTeamsOptions} onChange={awayDropdownChange} placeholderText="Select A Team" isDisabled={selectAway} isClearable={true}/>
         </div>
+        <div>
+          <ToggleButton locations={locations} locationChange={locationChange} tournaments={tournaments} tournamentChange={tournamentChange} show={show} setShow={setShow}/>
+        </div>
+        
+
         <div className="container">
             <h1>Match History</h1>
-            <MatchTable data={data}/>
+            <MatchTable data={data} lid={outputLid} toid={outputToid}/>
+            {console.log("outputLid: ")}
+            {console.log(outputLid)}
         </div>
       </div>
     </div>

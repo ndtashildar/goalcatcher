@@ -2,8 +2,49 @@ import React from "react";
 import "./index.scss";
 
 const MatchTable = (props) => {
-    const data = props.data;
-    const dataTable = !data ? <tr></tr> : data.map((item) => (
+    const dataFull = props.data;
+    const outputLid = props.lid;
+    const outputToid = props.toid;
+    console.log("props")
+    console.log(outputLid)
+    console.log(Object.keys(outputLid).length)
+    // console.log(outputToid)
+    
+    console.log("dataFull")
+    console.log(dataFull)
+    var data = null;
+    if(dataFull !== null){
+        data = dataFull.filter(function (el) {
+            // if(outputLid !== null && outputToid !== null){
+            //     return el.toid == outputToid && el.lid == outputLid ;
+            // }
+            // else if(outputLid !== null){
+            //     return el.lid == outputLid;
+            // }
+            // else if(outputToid !== null){
+            //     return el.toid == outputToid;
+            // }
+            // else{
+            //     return true
+            // }
+            //empty check
+            if(typeof outputLid === 'number' && typeof outputToid === 'number'){
+                console.log("entered")
+                return el.lid == outputLid && el.toid == outputToid
+            }
+            else if(typeof outputLid === 'number'){
+                return el.lid == outputLid
+            }
+            else if(typeof outputToid === 'number'){
+                return el.lid == outputToid
+            }
+            else{
+                return true;
+            }
+          });
+    }
+    
+        const dataTable = !data ? <tr></tr> : data.map((item) => (
         <tr key={item.mid}>
             <td>{item.home_team}</td>
             <td>{item.away_team}</td>
