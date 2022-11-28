@@ -104,6 +104,12 @@ const Landing = () => {
   const [outputToid, setOutputToid] = useState({});
   const [outputLid, setOutputLid] = useState({});
 
+  // state for filter home/away/all on first team
+  const [sideFilter, setSideFilter] = useState({});
+
+  // state for filter win/loss/tie/all on first team
+  const [winFilter, setWinFilter] = useState({});
+
 
   const locationChange = async e => {
     // console.log('lid')
@@ -118,6 +124,9 @@ const Landing = () => {
       catch (error) {
         console.log(error);
       }
+    }
+    else{
+      setOutputLid(null)
     }
   }
         
@@ -135,14 +144,56 @@ const Landing = () => {
         console.log(error);
       }
     }
+    else{
+      setOutputToid(null)
+    }
   }
 
+  const firstTeamSideChange = async e => {
+    // console.log('lid')
+    // console.log(e['value'])
+    
+    if (e !== null){
+      
+      try {
+        setSideFilter(e['value']); 
+        // console.log(outputLid)
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    else{
+      setSideFilter(null)
+    }
+  }
+
+
+  const firstTeamWinChange = async e => {
+    // console.log('lid')
+    // console.log(e['value'])
+    
+    if (e !== null){
+      
+      try {
+        setWinFilter(e['value']); 
+        // console.log(outputLid)
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    else{
+      setWinFilter(null)
+    }
+  }
 
   useEffect(() => {
     
     fetch("/locations")
     .then(response => response.json())
     .then(data => setLocations(data.payload))
+
 
     fetch("/tournaments")
     .then(response => response.json())
@@ -153,6 +204,32 @@ const Landing = () => {
   }, []);
 
   const [show,setShow]=useState(false)
+
+  const sideOptions = [
+    {
+      "value": 0,
+      "label": "Home"
+    },
+    {
+      "value": 1,
+      "label": "Away"
+    }
+  ]
+
+  const winOptions = [
+    {
+      "value": 0,
+      "label": "Win"
+    },
+    {
+      "value": 1,
+      "label": "Loss"
+    },
+    {
+      "value": 2,
+      "label": "Tie"
+    }
+  ]
 
   return (
     <div className="Landing">
@@ -173,13 +250,14 @@ const Landing = () => {
           <Dropdown options={awayTeamsOptions} onChange={awayDropdownChange} placeholderText="Select A Team" isDisabled={selectAway} isClearable={true}/>
         </div>
         <div>
-          <ToggleButton locations={locations} locationChange={locationChange} tournaments={tournaments} tournamentChange={tournamentChange} show={show} setShow={setShow}/>
+        {console.log(locations)}
+          <ToggleButton firstWin={winOptions} firstWinFilter={firstTeamWinChange} firstSide={sideOptions} firstSideFilter={firstTeamSideChange} locations={locations} locationChange={locationChange} tournaments={tournaments} tournamentChange={tournamentChange} show={show} setShow={setShow}/>
         </div>
         
 
         <div className="container">
             <h1>Match History</h1>
-            <MatchTable data={data} lid={outputLid} toid={outputToid}/>
+            <MatchTable data={data} lid={outputLid} toid={outputToid} hid={homeTeam} firstSide={sideFilter} firstWin={winFilter}/>
             {console.log("outputLid: ")}
             {console.log(outputLid)}
         </div>

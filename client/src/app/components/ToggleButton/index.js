@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import Dropdown from "../Dropdown";
 
 
-const ToggleButton= ({locations, locationChange, tournaments, tournamentChange, show, setShow}) => {
+const ToggleButton= ({firstWin, firstWinFilter, firstSide, firstSideFilter, locations, locationChange, tournaments, tournamentChange, show, setShow}) => {
 
   // // state for data from db
   // const [locations, setLocations] = useState({});
@@ -61,10 +61,18 @@ const ToggleButton= ({locations, locationChange, tournaments, tournamentChange, 
   // }, []);
 
   // const [show,setShow]=useState(false)
+
+
+
   return (
     <div>
      {
-      show?<div className="dropdowns"><Dropdown options={locations} onChange={locationChange} placeholderText="Select a Location" isDisabled={false} isClearable={true}/><Dropdown options={tournaments} onChange={tournamentChange} placeholderText="Select a Tournament" isDisabled={false} isClearable={true}/></div>:null
+      show?<div className="dropdowns">
+        <Dropdown options={locations} onChange={locationChange} placeholderText="Select a Location" isDisabled={false} isClearable={true}/>
+        <Dropdown options={tournaments} onChange={tournamentChange} placeholderText="Select a Tournament" isDisabled={false} isClearable={true}/>
+        <Dropdown options={firstSide} onChange={firstSideFilter} placeholderText="Select the First Team's Side" isDisabled={false} isClearable={true}/>
+        <Dropdown options={firstWin} onChange={firstWinFilter} placeholderText="Select the First Team's Outcome" isDisabled={false} isClearable={true}/>
+        </div>:null
       
     }{
       !show?<button onClick={()=>setShow(true)} >Show Advanced Selections</button>:null
