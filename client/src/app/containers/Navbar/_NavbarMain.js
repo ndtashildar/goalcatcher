@@ -12,9 +12,11 @@ const NavbarMain = () => {
   return (
     <nav className="Navbar">
       <div className="inner container is-fixed">
+        <img className="logo" src={logo} alt=""/>
         <NavLink to="/" onClick={() => window.location.reload()}>
           Goal Catcher
         </NavLink>
+        <img className="logo" src={logo} alt=""/>
       </div>
     </nav>
   );

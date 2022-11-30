@@ -3,8 +3,8 @@
 .Landing {
     .inner {
         padding: {
-            top: map-get($spacing, "xl");
-            // bottom: map-get($spacing, "xl");
+            top: map-get($spacing, "lg");
+            bottom: map-get($spacing, "lg");
         }
         .title {
             font: {
