@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from "react";
 import "./index.scss";
 
+import errImage from './error.jpg' // relative path to imag
+
 //Import components
 import Dropdown from "../../components/Dropdown";
 import MatchTable from "../../components/MatchTable";
@@ -18,14 +20,47 @@ const Landing = () => {
   const [homeTeamsOptions, sethomeTeamsOptions] = useState([]);
   const [awayTeamsOptions, setAwayTeamsOptions] = useState([]);
 
+  const [flagOptions, setFlagOptions] = useState([]);
+  // state for flags
+  const [flagHome, setFlagHome] = useState(errImage);
+  const [flagAway, setFlagAway] = useState(errImage);
+
   useEffect(() => {
     fetch("/teams")
     .then(response => response.json())
     .then(data => {setAwayTeamsOptions(data.payload); sethomeTeamsOptions(data.payload);})
+
+    fetch("/flags")
+    .then(response => response.json())
+    .then(data => setFlagOptions(data.payload))
+
   }, []);
 
   const homeDropdownChange = async e => {
-    setHomeTeam(e); 
+    setHomeTeam(e);
+    
+    //logic for flags
+    //  console.log("e")
+    //  console.log(e)
+    if(e !== null){
+      const currentFlagHome = flagOptions.filter(function (el) {
+        return el["tid"] === e.value 
+      })
+      if(currentFlagHome[0]["flag"] !== null){
+        setFlagHome(currentFlagHome[0]["flag"])
+      }
+      else{
+        setFlagHome(errImage)
+      }
+    }
+    
+    else{
+
+      setFlagHome(errImage)
+    }
+    
+    
+
     if (e !== null){
       setSelectedAway(false);
       try {
@@ -55,6 +90,26 @@ const Landing = () => {
   }
 
   const awayDropdownChange = async e => {
+    // setAwayTeam(e); 
+
+
+    if(e !== null){
+    const currentFlagAway = flagOptions.filter(function (el) {
+      return el["tid"] === e.value 
+    })
+    
+    if(currentFlagAway[0]["flag"] !== null){
+      setFlagAway(currentFlagAway[0]["flag"])
+    }
+    else{
+      setFlagAway(errImage)
+    }
+    }
+    else{
+      setFlagAway(errImage)
+    }
+
+
     if (e !== null){
       setClearable(false)
       setSelectHome(true)
@@ -105,6 +160,11 @@ const Landing = () => {
 
   // state for filter win/loss/tie/all on first team
   const [winFilter, setWinFilter] = useState({});
+
+  //state for flags
+  //const [flags, setFlags] = useState({});
+
+
 
 
   const locationChange = async e => {
@@ -241,9 +301,14 @@ const Landing = () => {
           Select Two Teams For VS Match History
         </p>
         <div className="dropdowns">
+          {/* {console.log("flagHome")}
+          {console.log(flagHome)}
+          {console.log(typeof flagHome)} */}
+          <img className="flags" src={flagHome}  alt=""/>
           <Dropdown options={homeTeamsOptions} onChange={homeDropdownChange} placeholderText="Select A Team" isDisabled={selectHome} isClearable={clearable}/>
           VS
           <Dropdown options={awayTeamsOptions} onChange={awayDropdownChange} placeholderText="Select A Team" isDisabled={selectAway} isClearable={true}/>
+          <img className="flags" src={flagAway} alt="" />
         </div>
         <div>
         {/* {console.log(locations)} */}

@@ -31,8 +31,19 @@
               bottom: map-get($spacing, "xs");
             };
         }
+
+        .flex {
+            display:flex; flex-direction:row;
+        }
+
+        .flags{
+            height: 200px;
+            width: 300px;
+            text-indent: 100vw;
+        }
     }
 }
 .matchHistory {
     text-align: center;
   }
+

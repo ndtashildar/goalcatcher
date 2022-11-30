@@ -8,4 +8,5 @@ module.exports = {
     getHomeTeams: require("./_getHomeTeams"),
     getLocations: require("./_getLocations"),
     getTournaments: require("./_getTournaments"),
+    getAllFlags: require("./_getAllFlags"),
 };

@@ -217,5 +217,26 @@ router.get("/flag/:tid", async (req,res) => {
 // });
 
 
+//@route GET flags
+//@desc Get flags url of all teams
+//@access private
+router.get("/flags", async (req,res) => {
+  try {
+    const flags = await mw.getAllFlags()
+
+    return res.status(200).json({
+        message: "Flags Found",
+        payload: flags,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
+
 //Export router
 module.exports = router;
