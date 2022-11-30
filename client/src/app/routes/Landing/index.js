@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import "./index.scss";
 
-import errImage from './error.jpg' // relative path to imag
+import errImage from './error.png' // relative path to imag
 
 //Import components
 import Dropdown from "../../components/Dropdown";
@@ -14,6 +14,7 @@ const Landing = () => {
   const [selectAway, setSelectedAway] = useState(true);
   const [selectHome, setSelectHome] = useState(false);
   const [clearable, setClearable] = useState(true);
+  const [showMatchTable, setShowMatchTable] = useState(false);
 
   // state for data from db
   const [data, setData] = useState([]);
@@ -63,6 +64,7 @@ const Landing = () => {
 
     if (e !== null){
       setSelectedAway(false);
+      setShowMatchTable(true);
       try {
         console.log("Here")
         const hid = e.value;
@@ -82,6 +84,7 @@ const Landing = () => {
     }
     else{
       setSelectedAway(true);
+      setShowMatchTable(false);
       setData(null)
       await fetch("/teams")
       .then(response => response.json())
@@ -315,13 +318,15 @@ const Landing = () => {
           <ToggleButton firstWin={winOptions} firstWinFilter={firstTeamWinChange} firstSide={sideOptions} firstSideFilter={firstTeamSideChange} locations={locations} locationChange={locationChange} tournaments={tournaments} tournamentChange={tournamentChange} show={show} setShow={setShow}/>
         </div>
         
-
-        <div className="container">
+        {
+          showMatchTable ? 
+          <div className="container">
             <h1 className ="matchHistory">Match History</h1>
             <MatchTable data={data} lid={outputLid} toid={outputToid} hid={homeTeam} firstSide={sideFilter} firstWin={winFilter}/>
             {/* {console.log("outputLid: ")} */}
             {/* {console.log(outputLid)} */}
-        </div>
+          </div>:null
+        }  
       </div>
     </div>
   );

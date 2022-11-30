@@ -11,15 +11,19 @@ $nav-height: 3rem;
     top: 0;
     width: 100%;
     z-index: map-get($z-index, "highest");
+    margin: 0 auto; 
+    text-align: center;
 
     .inner {
-        align-items: center;
         display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
         height: $nav-height;
-        justify-content: space-between;
 
         a {
             display: inline-block;
+            text-decoration: none;
         }
 
         .active {

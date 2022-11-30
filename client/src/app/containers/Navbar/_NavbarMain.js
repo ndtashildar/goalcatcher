@@ -6,12 +6,13 @@
  */
 import React from "react";
 import { NavLink } from "react-router-dom";
+import logo from "./logo.png"
 
 const NavbarMain = () => {
   return (
     <nav className="Navbar">
       <div className="inner container is-fixed">
-        <NavLink className="no-deco" to="/">
+        <NavLink to="/" onClick={() => window.location.reload()}>
           Goal Catcher
         </NavLink>
       </div>
