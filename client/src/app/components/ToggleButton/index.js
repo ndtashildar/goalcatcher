@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
 import Dropdown from "../Dropdown";
+import "./index.scss";
 
 
 const ToggleButton= ({firstWin, firstWinFilter, firstSide, firstSideFilter, locations, locationChange, tournaments, tournamentChange, show, setShow}) => {
@@ -75,7 +76,7 @@ const ToggleButton= ({firstWin, firstWinFilter, firstSide, firstSideFilter, loca
         </div>:null
       
     }{
-      !show?<button onClick={()=>setShow(true)} >Show Advanced Selections</button>:null
+      !show?<div className="center"><button className="showOptions" onClick={()=>setShow(true)} >Show Advanced Selections</button></div>:null
     }
     </div>
   );
