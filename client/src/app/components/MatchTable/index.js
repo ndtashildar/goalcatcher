@@ -82,6 +82,7 @@ const MatchTable = (props) => {
     }
     
         const dataTable = !data ? <tr></tr> : data.map((item) => (
+            
         <tr key={item.mid}>
             <td>{item.home_team}</td>
             <td>{item.away_team}</td>
@@ -95,6 +96,7 @@ const MatchTable = (props) => {
         </tr>
     ))
     return (
+
         <table>
             <thead>
                 <tr>
@@ -112,6 +114,8 @@ const MatchTable = (props) => {
                 {dataTable}
             </tbody>
         </table>
+
+        
     )
 }
 

@@ -1,9 +1,25 @@
-thead,
-tbody {
+thead {
   display: block;
 }
+
+  .MatchTable, tr, td{
+
+    text-align: center;
+    height: 50px;
+    vertical-align: center;
+    border: 1px solid;
+    width: 150px;
+  }  
+
+  th{
+    text-align: center;
+    height: 50px;
+    vertical-align: center;
+    width: 150px;
+  }
 
 tbody {
   max-height: 350px;
   overflow: auto;
+  display: block;
 }

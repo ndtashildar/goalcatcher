@@ -234,7 +234,7 @@ const Landing = () => {
   return (
     <div className="Landing">
       <div className="inner container is-fluid">
-        <h1 className="title is-xxxxl has-text-centered">Goal Catcher</h1>
+        <h1 className="title is-xxxxl has-text-centered">Goal Catcher </h1>
         <p className="is-rem subtitle has-text-centered">
           Select One Team For Individual Match History
         </p>
@@ -256,7 +256,7 @@ const Landing = () => {
         
 
         <div className="container">
-            <h1>Match History</h1>
+            <h1 className ="matchHistory">Match History</h1>
             <MatchTable data={data} lid={outputLid} toid={outputToid} hid={homeTeam} firstSide={sideFilter} firstWin={winFilter}/>
             {console.log("outputLid: ")}
             {console.log(outputLid)}
