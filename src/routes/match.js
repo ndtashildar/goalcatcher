@@ -108,7 +108,7 @@ router.get("/locations", async (req,res) => {
         payload: error,
       });
     }
-  });
+});
 
 //@route GET tournaments
 //@desc Fetch all tournaments to fill dropdowns on Landing page

@@ -12,7 +12,7 @@ const NavbarMain = () => {
     <nav className="Navbar">
       <div className="inner container is-fixed">
         <NavLink className="no-deco" to="/">
-          Home
+          Goal Catcher
         </NavLink>
       </div>
     </nav>

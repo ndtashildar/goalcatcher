@@ -9,8 +9,8 @@ import ToggleButton from "../../components/ToggleButton";
 
 const Landing = () => {
   const [homeTeam, setHomeTeam] = useState({});
-  const [awayTeam, setAwayTeam] = useState({});
   const [selectAway, setSelectedAway] = useState(true);
+  const [selectHome, setSelectHome] = useState(false);
   const [clearable, setClearable] = useState(true);
 
   // state for data from db
@@ -29,32 +29,18 @@ const Landing = () => {
     if (e !== null){
       setSelectedAway(false);
       try {
+        console.log("Here")
         const hid = e.value;
         await fetch(`/teams/away/${hid}`)
         .then(response => response.json())
         .then(data => setAwayTeamsOptions(data.payload))
-
-        if(awayTeam.value === undefined){
-          console.log("One", homeTeam, awayTeam)
-          const response = await fetch(`/match/${hid}`)
-          const matches = response.json()
-          matches.then(value => {
-            setData(value.payload)
-          }).catch (err => {
-            console.log(err)
-          })
-        }
-        else{
-          console.log("Two", homeTeam, awayTeam.value)
-          const aid = awayTeam.value;
-          const response = await fetch(`/match/${hid}/${aid}`)
-          const matches = response.json()
-          matches.then(value => {
-            setData(value.payload)
-          }).catch (err => {
-            console.log(err)
-          })
-        }
+        const response = await fetch(`/match/${hid}`)
+        const matches = response.json()
+        matches.then(value => {
+          setData(value.payload)
+        }).catch (err => {
+          console.log(err)
+        })
       } catch (error) {
         console.log(error);
       }
@@ -69,9 +55,9 @@ const Landing = () => {
   }
 
   const awayDropdownChange = async e => {
-    setAwayTeam(e); 
     if (e !== null){
       setClearable(false)
+      setSelectHome(true)
       try {
 
         const aid = e.value;
@@ -91,9 +77,19 @@ const Landing = () => {
     }
     else{
       setClearable(true)
+      setSelectHome(false)
       setData(null)
+
+      const hid = homeTeam.value;
+
+      const response = await fetch(`/match/${hid}`)
+      const matches = response.json()
+      matches.then(value => {
+        setData(value.payload)
+      }).catch (err => {
+        console.log(err)
+      })
     }
-    
   }
 
   // state for data from db
@@ -245,12 +241,12 @@ const Landing = () => {
           Select Two Teams For VS Match History
         </p>
         <div className="dropdowns">
-          <Dropdown options={homeTeamsOptions} onChange={homeDropdownChange} placeholderText="Select A Team" isDisabled={false} isClearable={clearable}/>
+          <Dropdown options={homeTeamsOptions} onChange={homeDropdownChange} placeholderText="Select A Team" isDisabled={selectHome} isClearable={clearable}/>
           VS
           <Dropdown options={awayTeamsOptions} onChange={awayDropdownChange} placeholderText="Select A Team" isDisabled={selectAway} isClearable={true}/>
         </div>
         <div>
-        {console.log(locations)}
+        {/* {console.log(locations)} */}
           <ToggleButton firstWin={winOptions} firstWinFilter={firstTeamWinChange} firstSide={sideOptions} firstSideFilter={firstTeamSideChange} locations={locations} locationChange={locationChange} tournaments={tournaments} tournamentChange={tournamentChange} show={show} setShow={setShow}/>
         </div>
         
@@ -258,8 +254,8 @@ const Landing = () => {
         <div className="container">
             <h1 className ="matchHistory">Match History</h1>
             <MatchTable data={data} lid={outputLid} toid={outputToid} hid={homeTeam} firstSide={sideFilter} firstWin={winFilter}/>
-            {console.log("outputLid: ")}
-            {console.log(outputLid)}
+            {/* {console.log("outputLid: ")} */}
+            {/* {console.log(outputLid)} */}
         </div>
       </div>
     </div>

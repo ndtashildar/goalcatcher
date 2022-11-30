@@ -5,9 +5,9 @@ $nav-height: 3rem;
 .Navbar {
     background-color: map-get($color, "light");
     color: map-get($color, "scarlet");
-    font-size: map-get($size, "sm");
+    font-size: map-get($size, "md");
 
-    position: fixed;
+    position: relative;
     top: 0;
     width: 100%;
     z-index: map-get($z-index, "highest");
@@ -23,7 +23,7 @@ $nav-height: 3rem;
         }
 
         .active {
-            color: map-get($color, "blue");
+            color: map-get($color, "scarlet");
         }
     }
 }

@@ -13,11 +13,11 @@ const MatchTable = (props) => {
     // console.log(Object.keys(outputLid).length)
     // console.log(outputToid)
     
-    console.log("dataFull")
-    console.log(dataFull)
+    // console.log("dataFull")
+    // console.log(dataFull)
 
-    console.log("winFilter")
-    console.log(winFilter === null)
+    // console.log("winFilter")
+    // console.log(winFilter === null)
 
     var data = null;
     if(dataFull !== null){
@@ -36,7 +36,7 @@ const MatchTable = (props) => {
             // }
             //empty check
             if(typeof outputLid === 'number' && typeof outputToid === 'number'){
-                console.log("entered")
+                // console.log("entered")
                 return el.lid == outputLid && el.toid == outputToid
             }
             else if(typeof outputLid === 'number'){
@@ -60,10 +60,10 @@ const MatchTable = (props) => {
                 return true;
             }
         })
-        console.log("hid check")
-        console.log(homeId)
-        console.log("sideFilter")
-        console.log(sideFilter)
+        // console.log("hid check")
+        // console.log(homeId)
+        // console.log("sideFilter")
+        // console.log(sideFilter)
 
         data = data.filter(function (el) {
             if (winFilter === 0){
@@ -92,7 +92,6 @@ const MatchTable = (props) => {
             <td>{item.city}</td>
             <td>{item.country}</td>
             <td>{item.m_date}</td>
-            <td/>
         </tr>
     ))
     return (

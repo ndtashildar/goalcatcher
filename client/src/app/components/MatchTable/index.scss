@@ -23,3 +23,12 @@ tbody {
   overflow: auto;
   display: block;
 }
+
+tbody::-webkit-scrollbar {
+  width: 1px;
+}
+
+tbody::-webkit-scrollbar-thumb {
+background-color: white;
+outline: 1px solid white;
+}

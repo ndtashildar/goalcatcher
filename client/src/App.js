@@ -11,7 +11,7 @@ const Landing = React.lazy(() => import("./app/routes/Landing"));
 const App = (props) => {
   return (
     <React.Fragment>
-      <Router>
+      <Router forceRefresh>
         <Navbar />
           <Suspense fallback={<Loading />}>
               <Routes>
