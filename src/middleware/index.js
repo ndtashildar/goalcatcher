@@ -10,5 +10,7 @@ module.exports = {
     getTournaments: require("./_getTournaments"),
     getAllFlags: require("./_getAllFlags"),
     getVSWinCount: require("./_getVSWinCount"),
-    getVSGameCount: require("./_getVSGameCount")
+    getVSGameCount: require("./_getVSGameCount"),
+    getWinCount: require("./_getWinCount"),
+    getTotalGamesPlayed: require("./_getTotalGamesPlayed"),
 };

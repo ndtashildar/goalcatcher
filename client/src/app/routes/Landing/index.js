@@ -11,6 +11,7 @@ import ToggleButton from "../../components/ToggleButton";
 
 const Landing = () => {
   const [homeTeam, setHomeTeam] = useState({});
+  const [awayTeam, setAwayTeam] = useState({});
   const [selectAway, setSelectedAway] = useState(true);
   const [selectHome, setSelectHome] = useState(false);
   const [clearable, setClearable] = useState(true);
@@ -26,6 +27,14 @@ const Landing = () => {
   const [flagHome, setFlagHome] = useState(errImage);
   const [flagAway, setFlagAway] = useState(errImage);
 
+
+  // state for intl wins
+  const [intlWins, setIntlWins] = useState({});
+  const [intlGames, setIntlGames] = useState({});
+  //state for vs wins
+  const [intlWins2, setIntlWins2] = useState({});
+  const [intlGames2, setIntlGames2] = useState({});
+
   useEffect(() => {
     fetch("/teams")
     .then(response => response.json())
@@ -39,6 +48,7 @@ const Landing = () => {
 
   const homeDropdownChange = async e => {
     setHomeTeam(e);
+    
     
     //logic for flags
     //  console.log("e")
@@ -68,6 +78,16 @@ const Landing = () => {
       try {
         console.log("Here")
         const hid = e.value;
+
+        await fetch(`/intlWins/${hid}`)
+        .then(response => response.json())
+        .then(data => {setIntlWins(data.payload); })
+        
+        await fetch(`/intlGames/${hid}`)
+        .then(response => response.json())
+        .then(data => {setIntlGames(data.payload); })
+        
+
         await fetch(`/teams/away/${hid}`)
         .then(response => response.json())
         .then(data => setAwayTeamsOptions(data.payload))
@@ -93,10 +113,22 @@ const Landing = () => {
   }
 
   const awayDropdownChange = async e => {
-    // setAwayTeam(e); 
+    setAwayTeam(e); 
 
 
     if(e !== null){
+
+
+      const aid = e.value;
+      await fetch(`/intlWins/${aid}`)
+        .then(response => response.json())
+        .then(data => {setIntlWins2(data.payload); })
+      
+      await fetch(`/intlGames/${aid}`)
+      .then(response => response.json())
+      .then(data => {setIntlGames2(data.payload); })
+
+
     const currentFlagAway = flagOptions.filter(function (el) {
       return el["tid"] === e.value 
     })
@@ -304,6 +336,7 @@ const Landing = () => {
           Select Two Teams For VS Match History
         </p>
         <div className="dropdowns">
+          
           {/* {console.log("flagHome")}
           {console.log(flagHome)}
           {console.log(typeof flagHome)} */}
@@ -313,6 +346,7 @@ const Landing = () => {
           <Dropdown options={awayTeamsOptions} onChange={awayDropdownChange} placeholderText="Select A Team" isDisabled={selectAway} isClearable={true}/>
           <img className="flags" src={flagAway} alt="" />
         </div>
+        
         <div>
         {/* {console.log(locations)} */}
           <ToggleButton firstWin={winOptions} firstWinFilter={firstTeamWinChange} firstSide={sideOptions} firstSideFilter={firstTeamSideChange} locations={locations} locationChange={locationChange} tournaments={tournaments} tournamentChange={tournamentChange} show={show} setShow={setShow}/>
@@ -321,6 +355,17 @@ const Landing = () => {
         {
           showMatchTable ? 
           <div className="container">
+            {console.log("away")}
+            {console.log(awayTeam)}
+            <div className="winRates">
+            {/* {
+              Object.keys(intlWins).length !== 0? console.log(intlWins["count"]) : null
+              
+            } */}
+            <p className="leftWinRate winRateText"> {(homeTeam === null || Object.keys(homeTeam).length === 0) ? "": "International Win Rate for " + homeTeam["label"]+ ": "+Math.round((Object.keys(intlWins).length !== 0? intlWins["count"] : -1)*100/((Object.keys(intlWins).length !== 0? intlGames["count"] : -1))).toFixed(2)+"%" } </p>
+            <p className="rightWinRate winRateText">{(awayTeam === null || Object.keys(awayTeam).length === 0) ? "": "International Win Rate for " + awayTeam["label"]+ ": "+Math.round((Object.keys(intlWins2).length !== 0? intlWins2["count"] : -1)*100/((Object.keys(intlWins2).length !== 0? intlGames2["count"] : -1))).toFixed(2)+"%" } </p>
+            </div>
+            
             <h1 className ="matchHistory">Match History</h1>
             <MatchTable data={data} lid={outputLid} toid={outputToid} hid={homeTeam} firstSide={sideFilter} firstWin={winFilter}/>
             {/* {console.log("outputLid: ")} */}

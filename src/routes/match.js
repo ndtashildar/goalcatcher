@@ -262,5 +262,53 @@ router.get("/flags", async (req,res) => {
   }
 });
 
+//@route GET intlWins/:tid
+//@desc international win count for a team
+//@access private
+router.get("/intlWins/:tid", async (req,res) => {
+  try {
+    const { tid } = req.params
+    const awayTeams = await mw.getWinCount(tid)
+
+    return res.status(200).json({
+        message: "Intl Wins Fetched",
+        payload: awayTeams,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
+
+//@route GET teams/away/:tid
+//@desc International Games count for a team
+//@access private
+router.get("/intlGames/:tid", async (req,res) => {
+  try {
+    const { tid } = req.params
+    const awayTeams = await mw.getTotalGamesPlayed(tid)
+
+    return res.status(200).json({
+        message: "Intl Games Fetched",
+        payload: awayTeams,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      payload: error,
+    });
+  }
+});
+
+
+
+
+
 //Export router
 module.exports = router;

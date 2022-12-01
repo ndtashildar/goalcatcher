@@ -45,5 +45,32 @@
 }
 .matchHistory {
     text-align: center;
+    float: center;
   }
 
+
+//   p {
+//     font-size:30px
+//   }
+.rightWinRate{
+    float: left;
+}
+
+.rightWinRate{
+    float: right;
+}
+
+.winRates{
+    
+    align-items: center;
+    display: inline-block;
+    width: 100%;
+
+
+}
+
+.winRateText{
+ display:inline;
+ word-wrap: break-word;
+ font-weight: 600;
+}
