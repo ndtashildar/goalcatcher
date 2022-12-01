@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS teams    ( tid       INTEGER NOT NULL,
 CREATE TABLE IF NOT EXISTS matches  ( mid  INTEGER NOT NULL,
                                         home_score  INTEGER NOT NULL,
                                         away_score  INTEGER NOT NULL,
-                                        m_date      DATE NOT NULL,               -- make NOT NULL when this date is fixed
+                                        m_date      VARCHAR(50) NOT NULL,               -- make NOT NULL when this date is fixed
                                         PRIMARY KEY (mid));
                     
 CREATE TABLE IF NOT EXISTS locations    ( lid  INTEGER NOT NULL,
