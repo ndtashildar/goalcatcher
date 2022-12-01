@@ -1,3 +1,5 @@
+@import "../../styles/_variables.scss";
+
 thead {
   display: block;
 }
@@ -29,6 +31,6 @@ tbody::-webkit-scrollbar {
 }
 
 tbody::-webkit-scrollbar-thumb {
-background-color: white;
-outline: 1px solid white;
+background-color: map-get($spacing, "light");
+outline: 1px solid map-get($spacing, "light");;
 }
